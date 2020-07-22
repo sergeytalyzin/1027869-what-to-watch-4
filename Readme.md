@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
-* Студент: [сергей талызин](https://up.htmlacademy.ru/react/4/user/1027869).
-* Наставник: `Неизвестно`.
+* Студент: [сергей талызин](https://up.htmlacademy.ru/react/3/user/1027869).
+* Наставник: [Сергей Вохмянин](https://htmlacademy.ru/profile/id530823).
 
 ---
 
@@ -48,5 +48,5 @@ git clone SSH-адрес_вашего_форка
 
 Репозиторий создан для обучения на профессиональном онлайн‑курсе «[JavaScript, уровень 3](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
 
-[travis-image]: https://travis-ci.com/htmlacademy-react/1027869-what-to-watch-4.svg?branch=master
-[travis-url]: https://travis-ci.com/htmlacademy-react/1027869-what-to-watch-4
+[travis-image]: https://travis-ci.com/htmlacademy-react/1027869-what-to-watch-3.svg?branch=master
+[travis-url]: https://travis-ci.com/htmlacademy-react/1027869-what-to-watch-3
