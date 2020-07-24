@@ -15,7 +15,6 @@ const onUnAuthorized = () => {
 };
 
 
-
 const api = createAPI(onUnAuthorized);
 
 const store = createStore(reducer, composeWithDevTools(

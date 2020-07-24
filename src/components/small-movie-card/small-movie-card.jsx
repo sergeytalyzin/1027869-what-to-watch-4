@@ -53,10 +53,10 @@ export default SmallMovieCard;
 SmallMovieCard.propTypes = {
   onActiveFilm: PropTypes.func,
   film: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    previewVideoLink: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    previewVideoLink: PropTypes.string,
     posterBig: PropTypes.string,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
   }).isRequired,
   active: PropTypes.object.isRequired,
   handleClickItem: PropTypes.func.isRequired,

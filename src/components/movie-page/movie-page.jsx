@@ -29,7 +29,7 @@ const activeToTab = (tab, film, id) => {
 
 
 const MoviePage = (props) => {
-  const {authorizationStatus, films, film, activeTab, handleClickTab, onFilmWatch, onActiveFilm, postFavoriteFilms, loadFavoriteFilms} = props;
+  const {authorizationStatus, films, film, activeTab, handleClickTab, onFilmWatch, onActiveFilm, postFavoriteFilms, loadFavoriteFilms, loadFilms} = props;
   const {title, genre, date, src, bg, bgSrc, id, isFavorite} = film;
   let moreLikeThisFilms = [];
   moreLikeThisFilms = films.filter((it)=> it.genre === genre && it.id !== id).slice(0, 4);
@@ -41,6 +41,7 @@ const MoviePage = (props) => {
       postFavoriteFilms(id, 1);
     }
     loadFavoriteFilms();
+    loadFilms();
   };
 
   return (<React.Fragment>
@@ -54,9 +55,9 @@ const MoviePage = (props) => {
 
         <header className="page-header movie-card__head">
           <div className="logo">
-            <a onClick={(e) => {
+            <a onClick={(e)=>{
               e.preventDefault();
-              history.push(AppRoute.MY_LIST);
+              history.push(AppRoute.ROOT);
             }}
             href="#" className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
@@ -95,10 +96,24 @@ const MoviePage = (props) => {
               <button
                 onClick={changeFavorite}
                 className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"/>
-                </svg>
-                <span>My list</span>
+
+                {isFavorite ?
+
+                    <>
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#remove"/>
+                      </svg>
+                      <span>Remove from list</span>
+                    </>
+                  :
+                  <>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"/>
+                    </svg>
+                    <span>My list</span>
+                  </>
+
+                }
               </button>
               {authorizationStatus === AuthorizationStatus.AUTH &&
               (<button onClick={(e) => {
@@ -139,7 +154,11 @@ const MoviePage = (props) => {
 
       <footer className="page-footer">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <a href="#" onClick={(e)=>{
+            e.preventDefault();
+            history.push(AppRoute.ROOT);
+          }}
+          className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -161,30 +180,36 @@ MoviePage.propTypes = {
   handleClickTab: PropTypes.func.isRequired,
   films: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        date: PropTypes.number.isRequired,
-        src: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        ratingCount: PropTypes.number.isRequired,
-        ratingLevel: PropTypes.string,
-        description: PropTypes.string.isRequired,
-        actors: PropTypes.arrayOf.isRequired,
+        title: PropTypes.string,
+        genre: PropTypes.string,
+        date: PropTypes.number,
+        src: PropTypes.string,
+        rating: PropTypes.number,
+        ratingCount: PropTypes.number,
+        ratingLevel: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]),
+        description: PropTypes.string,
+        actors: PropTypes.arrayOf,
         director: PropTypes.string.isRequired,
       })).isRequired,
   film: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    src: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    ratingLevel: PropTypes.string,
+    id: PropTypes.number,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    date: PropTypes.number,
+    src: PropTypes.string,
+    rating: PropTypes.number,
+    ratingCount: PropTypes.number,
+    ratingLevel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     description: PropTypes.string.isRequired,
-    actors: PropTypes.arrayOf.isRequired,
-    director: PropTypes.string.isRequired,
-    bg: PropTypes.string.isRequired,
+    actors: PropTypes.any,
+    director: PropTypes.string,
+    bg: PropTypes.string,
     bgSrc: PropTypes.string,
     isFavorite: PropTypes.bool,
   }).isRequired,
@@ -192,6 +217,7 @@ MoviePage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   postFavoriteFilms: PropTypes.func,
   loadFavoriteFilms: PropTypes.func,
+  loadFilms: PropTypes.func,
 };
 
 

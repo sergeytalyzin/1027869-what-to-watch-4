@@ -27,17 +27,29 @@ const MoviePageOverview = (props) => {
 
 MoviePageOverview.propTypes = {
   film: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    posterBig: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    ratingLevel: PropTypes.string,
-    description: PropTypes.string.isRequired,
-    actors: PropTypes.arrayOf.isRequired,
-    director: PropTypes.string.isRequired,
-  }).isRequired,
+    bg: PropTypes.string,
+    bgSrc: PropTypes.string,
+    date: PropTypes.number,
+    description: PropTypes.string,
+    director: PropTypes.string,
+    genre: PropTypes.string,
+    id: PropTypes.number,
+    isFavorite: PropTypes.boolean,
+    posterBig: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+    rating: PropTypes.number,
+    ratingCount: PropTypes.number,
+    ratingLevel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    runTime: PropTypes.string,
+    src: PropTypes.string,
+    title: PropTypes.string,
+    videoLink: PropTypes.string,
+    actors: PropTypes.any,
+  })
+
 };
 
 

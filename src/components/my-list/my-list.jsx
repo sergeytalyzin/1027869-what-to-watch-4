@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {getFavoriteList} from "../../reducer/data/selectors.js";
 import {ActionCreator} from "../../reducer/app-status/app-status.js";
 import MovieList from "../movie-list/movie-list.jsx";
+import history from "../../history";
+import {AppRoute} from "../../const";
 
 
 const MyList = ({favoriteFilmsList, onActiveFilm}) => {
@@ -11,7 +13,10 @@ const MyList = ({favoriteFilmsList, onActiveFilm}) => {
   return (<div className="user-page">
     <header className="page-header user-page__head">
       <div className="logo">
-        <a href="main.html" className="logo__link">
+        <a href="#" onClick={(e)=>{
+          e.preventDefault();
+          history.push(AppRoute.ROOT);
+        }} className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>
@@ -39,7 +44,10 @@ const MyList = ({favoriteFilmsList, onActiveFilm}) => {
 
     <footer className="page-footer">
       <div className="logo">
-        <a href="#" className="logo__link logo__link--light">
+        <a href="#" onClick={(e)=>{
+          e.preventDefault();
+          history.push(AppRoute.ROOT);
+        }} className="logo__link logo__link--light">
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>

@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import {Switch, Route, Router} from "react-router-dom";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
@@ -26,111 +26,129 @@ const VideoPlayer = withVideo(MovieVideoPlayer);
 const MoviePageWrapper = withActiveTab(MoviePage);
 
 
-class App extends PureComponent {
-  render() {
-    const {
-      onFilmToWatchClick,
-      films,
-      onActiveFilmClick,
-      authorizationStatus,
-      comment,
-      filmsToRender,
-      film,
-      postFavoriteFilms,
-      loadFavoriteFilms
-    } = this.props;
-    return (<Router history={history}>
-      <Switch>
-        <Route exact path={AppRoute.ROOT}
-          render={() =>
-            <Main
-              loadFavoriteFilms={loadFavoriteFilms}
-              postFavoriteFilms={postFavoriteFilms}
-              films={filmsToRender}
-              promoFilm={film}
-              onFilmWatch={onFilmToWatchClick}
-              authorizationStatus={authorizationStatus}
-            />
-          }
-        />
-        <Route exact path={AppRoute.SIGN_IN}
-          render={()=>
-            <SignIn onSubmit={this.props.login}/>
-          }
-        />
-        <Route exact path={`${AppRoute.MOVIE_PAGE}/:id`}
-          render={(routeProps)=>{
-            const id = parseInt(routeProps.match.params.id, 10);
-            const chosenFilm = films.find((offer) => offer.id === id);
-            return <MoviePageWrapper
-              loadFavoriteFilms={loadFavoriteFilms}
-              postFavoriteFilms={postFavoriteFilms}
-              onFilmWatch={onFilmToWatchClick}
-              film = {chosenFilm}
-              films = {films}
-              onActiveFilm={onActiveFilmClick}
-              authorizationStatus={authorizationStatus}
-            />;
-          }}
-        />
-        <PrivateRoute exact path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
-          auth={authorizationStatus}
-          render={(routeProps)=> {
-            const id = parseInt(routeProps.match.params.id, 10);
-            const chosenFilm = films.find((offer) => offer.id === id);
-            return <AddReview
-              activeFilm = {chosenFilm}
-              onSubmit = {comment}
-            />;
-          }}
-        />
-        <PrivateRoute exact path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
-          auth={authorizationStatus}
-          render={(routeProps)=> {
-            const id = parseInt(routeProps.match.params.id, 10);
-            const filmsToWatch = films.find((offer) => offer.id === id);
-            return <VideoPlayer
-              type={`movie`}
-              className={`player__video`}
-              isPlaying={false}
-              videoSrc={filmsToWatch.videoLink}
-              posterSrc={filmsToWatch.src}
-              onExitFilmButtonClick = {onFilmToWatchClick}
-              isMuted
-            />;
-          }
-          }/>
-        <PrivateRoute
-          auth={authorizationStatus}
-          path={AppRoute.MY_LIST} exact
-          render={()=>
-            <MyList/>
-          }/>
-      </Switch>
-    </Router>);
-  }
-}
+const App = ({
+  loadFilms,
+  login,
+  onFilmToWatchClick,
+  films,
+  onActiveFilmClick,
+  authorizationStatus,
+  comment,
+  filmsToRender,
+  film,
+  postFavoriteFilms,
+  loadFavoriteFilms,
+}) => {
+  console.log(`authorizationStatus`,authorizationStatus)
+  return (<Router history={history}>
+    <Switch>
+      <Route exact path={AppRoute.ROOT}
+        render={() =>
+          <Main
+            loadFavoriteFilms={loadFavoriteFilms}
+            postFavoriteFilms={postFavoriteFilms}
+            films={filmsToRender}
+            loadFilms={loadFilms}
+            promoFilm={film}
+            onFilmWatch={onFilmToWatchClick}
+            authorizationStatus={authorizationStatus}
+          />
+        }
+      />
+      <Route exact path={AppRoute.SIGN_IN}
+        render={()=>
+          <SignIn onSubmit={login}/>
+        }
+      />
+      <Route exact path={`${AppRoute.MOVIE_PAGE}/:id`}
+        render={(routeProps)=>{
+          const id = parseInt(routeProps.match.params.id, 10);
+          const chosenFilm = films.find((offer) => offer.id === id);
+          return <MoviePageWrapper
+            loadFilms={loadFilms}
+            loadFavoriteFilms={loadFavoriteFilms}
+            postFavoriteFilms={postFavoriteFilms}
+            onFilmWatch={onFilmToWatchClick}
+            film = {chosenFilm}
+            films = {films}
+            onActiveFilm={onActiveFilmClick}
+            authorizationStatus={authorizationStatus}
+          />;
+        }}
+      />
+
+      <PrivateRoute exact path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
+        auth={authorizationStatus}
+        render={(routeProps)=> {
+          const id = parseInt(routeProps.match.params.id, 10);
+          const chosenFilm = films.find((offer) => offer.id === id);
+          return <AddReview
+            activeFilm = {chosenFilm}
+            onSubmit = {comment}
+          />;
+        }}
+      />
+      <PrivateRoute exact path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
+        auth={authorizationStatus}
+        render={(routeProps)=> {
+          const id = parseInt(routeProps.match.params.id, 10);
+          const filmsToWatch = films.find((offer) => offer.id === id);
+          return <VideoPlayer
+            type={`movie`}
+            className={`player__video`}
+            isPlaying={false}
+            videoSrc={filmsToWatch.videoLink}
+            posterSrc={filmsToWatch.src}
+            onExitFilmButtonClick = {onFilmToWatchClick}
+            isMuted
+          />;
+        }
+        }/>
+      <PrivateRoute
+        auth={authorizationStatus}
+        path={AppRoute.MY_LIST} exact
+        render={()=>
+          <MyList/>
+        }/>
+    </Switch>
+  </Router>);
+};
 
 
 App.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-  })).isRequired,
-  film: PropTypes.shape({
     title: PropTypes.string,
     genre: PropTypes.string,
     date: PropTypes.number,
-    videoLink: PropTypes.string,
-  }).isRequired,
-  filmsToRender: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
   })).isRequired,
-  activeFilm: PropTypes.any,
-  filmToWatch: PropTypes.any,
+  film: PropTypes.shape({
+    bg: PropTypes.string,
+    bgSrc: PropTypes.string,
+    date: PropTypes.number,
+    description: PropTypes.string,
+    director: PropTypes.string,
+    genre: PropTypes.string,
+    id: PropTypes.number,
+    isFavorite: PropTypes.boolean,
+    posterBig: PropTypes.string,
+    previewVideoLink: PropTypes.string,
+    rating: PropTypes.number,
+    ratingCount: PropTypes.number,
+    ratingLevel: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    runTime: PropTypes.number,
+    src: PropTypes.string,
+    title: PropTypes.string,
+    videoLink: PropTypes.string,
+    actors: PropTypes.any,
+  }),
+  filmsToRender: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    date: PropTypes.number,
+  })).isRequired,
   onActiveFilmClick: PropTypes.func,
   onFilmToWatchClick: PropTypes.func,
   login: PropTypes.func.isRequired,
@@ -138,6 +156,7 @@ App.propTypes = {
   comment: PropTypes.func,
   postFavoriteFilms: PropTypes.func,
   loadFavoriteFilms: PropTypes.func,
+  loadFilms: PropTypes.func,
 };
 
 
@@ -168,6 +187,9 @@ const mapStateToDispatch = (dispatch) =>({
   },
   postFavoriteFilms: (id, status) => {
     dispatch(DataOperation.postFavoriteFilms(id, status));
+  },
+  loadFilms: ()=> {
+    dispatch(DataOperation.loadFilms());
   }
 });
 

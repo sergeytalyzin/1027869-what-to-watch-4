@@ -43,21 +43,15 @@ class MoviePageReviews extends PureComponent {
 
 MoviePageReviews.propTypes = {
   loadReviews: PropTypes.func.isRequired,
-  film: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    posterBig: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    ratingLevel: PropTypes.string,
-    description: PropTypes.string.isRequired,
-    actors: PropTypes.arrayOf.isRequired,
-    director: PropTypes.string.isRequired,
-    runTime: PropTypes.number.isRequired,
-  }).isRequired,
-  reviews: PropTypes.any,
-  filmId: PropTypes.number.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    reviewComment: PropTypes.string,
+    reviewDate: PropTypes.string,
+    reviewId: PropTypes.number,
+    reviewRating: PropTypes.number,
+    reviewUserId: PropTypes.number,
+    reviewUserName: PropTypes.string
+  })),
+  filmId: PropTypes.number,
 };
 
 export {MoviePageReviews};

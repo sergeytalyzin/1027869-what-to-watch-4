@@ -63,7 +63,7 @@ class MovieVideoPlayer extends PureComponent {
                   <progress className="player__progress" value={`${progressInPercent}`} max="100"/>
                   <div className="player__toggler" style={{left: `${progressInPercent}%`}}>Toggler</div>
                 </div>
-                <div className="player__time-value">{convertVideoTime(progressInSeconds)}</div>
+                <div className="player__time-value">{progressInSeconds ? convertVideoTime(progressInSeconds) : `Время`}</div>
               </div>
 
               <div className="player__controls-row">

@@ -24,8 +24,12 @@ const ActionCreators = {
 const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
-      .then(() => {
-        dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.AUTH));
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.AUTH));
+        } else {
+          dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.NO_AUTH));
+        }
       })
       .catch((err) => {
         throw err;

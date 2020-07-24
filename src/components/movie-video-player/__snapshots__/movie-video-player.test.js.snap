@@ -40,7 +40,7 @@ exports[`<MovieVideoPlayer /> should render full movie player 1`] = `
       <div
         className="player__time-value"
       >
-        0:00:00
+        Время
       </div>
     </div>
     <div

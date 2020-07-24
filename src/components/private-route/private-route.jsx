@@ -21,8 +21,6 @@ const PrivateRoute = (props) => {
 
 PrivateRoute.propTypes = {
   auth: PropTypes.string.isRequired,
-  exact: PropTypes.bool.isRequired,
-  path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
 };
 export default PrivateRoute;

@@ -12,13 +12,14 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import {Link} from "react-router-dom";
 import history from "../../history.js";
 import {AppRoute} from "../../const.js";
+import {Operation as DataOperation} from "../../reducer/data/data";
 
 const GenreListWrapper = withActiveItem(GenreList);
 
 const Main = (props) => {
   const {films, allListFilms, promoFilm, onGenreClick, onChangeGenre,
     showedFilmsAmount, onClickShowMore, onClickActiveFilm,
-    authorizationStatus, onFilmWatch, filmsLength, postFavoriteFilms, loadFavoriteFilms} = props;
+    authorizationStatus, onFilmWatch, filmsLength, postFavoriteFilms, loadFavoriteFilms, loadFilms, loadPromoFilm} = props;
   const {title, genre, date, bgSrc, src, isFavorite, id} = promoFilm;
 
   const changeFavorite = () => {
@@ -26,10 +27,11 @@ const Main = (props) => {
       postFavoriteFilms(id, 0);
     } else {
       postFavoriteFilms(id, 1);
-      loadFavoriteFilms();
     }
+    loadFavoriteFilms();
+    loadFilms();
+    loadPromoFilm();
   };
-
   return (<React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -40,9 +42,9 @@ const Main = (props) => {
 
       <header className="page-header movie-card__head">
         <div className="logo">
-          <a onClick={(e) => {
+          <a onClick={(e)=>{
             e.preventDefault();
-            history.push(AppRoute.MY_LIST);
+            history.push(AppRoute.ROOT);
           }}
           className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
@@ -95,14 +97,26 @@ const Main = (props) => {
               </button>
               <button onClick={() => {
                 changeFavorite();
-                history.push(AppRoute.MY_LIST);
               }
               }
               className="btn btn--list movie-card__button movie-card__button--favorite" type="button">
-                <svg viewBox="0 0 19 20" fill="red" width="19" height="20">
-                  <use xlinkHref="#add"/>
-                </svg>
-                <span>My list</span>
+                {isFavorite ?
+
+                  <>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#remove"/>
+                    </svg>
+                    <span>Remove from list</span>
+                  </>
+                  :
+                  <>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"/>
+                    </svg>
+                    <span>My list</span>
+                  </>
+
+                }
               </button>
             </div>
           </div>
@@ -156,10 +170,10 @@ Main.propTypes = {
   onChangeGenre: PropTypes.func.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   films: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    date: PropTypes.number,
+    id: PropTypes.number,
   })).isRequired,
   promoFilm: PropTypes.shape({
     title: PropTypes.string,
@@ -171,16 +185,18 @@ Main.propTypes = {
     isFavorite: PropTypes.bool,
   }).isRequired,
   allListFilms: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    date: PropTypes.number,
+    id: PropTypes.number,
   })).isRequired,
   onClickShowMore: PropTypes.func.isRequired,
   onClickActiveFilm: PropTypes.func.isRequired,
   onFilmWatch: PropTypes.func,
   postFavoriteFilms: PropTypes.func,
   loadFavoriteFilms: PropTypes.func,
+  loadFilms: PropTypes.func,
+  loadPromoFilm: PropTypes.func
 };
 
 
@@ -203,6 +219,9 @@ const mapStateToDispatch = (dispatch) =>({
   onClickActiveFilm(film) {
     dispatch(ActionCreator.activeFilm(film));
   },
+  loadPromoFilm: () => {
+    dispatch(DataOperation.promoFilm());
+  }
 });
 
 

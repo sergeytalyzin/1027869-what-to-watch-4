@@ -37,9 +37,9 @@ GenreList.propTypes = {
   onChangeGenre: PropTypes.func.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   allListFilms: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    date: PropTypes.number,
   })).isRequired,
 };
 

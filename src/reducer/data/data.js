@@ -1,9 +1,12 @@
 import {extend} from "../../utils.js";
 import adaptFilmsData, {adaptFilm, adaptReview} from "./adapt-films-data.js";
+import StoreLocal from "../../localStorage/localStorage";
 
+
+const localStorage = new StoreLocal(`films`);
 
 const initializeState = {
-  films: [],
+  films: localStorage.getAll() || [],
   promoFilm: {},
   reviews: [],
   favoriteFilmsList: []
@@ -47,7 +50,9 @@ const Operation = {
   loadFilms: () => (dispatch, getState, api) => {
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreators.loadFilms(response.data));
+
+        localStorage.setItem(response.data);
+        dispatch(ActionCreators.loadFilms(localStorage.getAll()));
       });
   },
   promoFilm: () => (dispatch, getState, api) => {

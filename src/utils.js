@@ -12,6 +12,9 @@ export const formatDateForReview = (date) => {
   return `${month} ${day}, ${year}`;
 };
 
+export const formatMovieDuration = (movieDuration) => {
+  return `${(movieDuration / 60).toFixed(0)}h ${movieDuration % 60}min`;
+};
 
 export const getTextRating = (rating) => {
   switch (true) {
