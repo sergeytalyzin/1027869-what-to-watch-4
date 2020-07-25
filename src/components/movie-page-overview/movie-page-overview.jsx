@@ -43,7 +43,6 @@ MoviePageOverview.propTypes = {
       PropTypes.string,
       PropTypes.number,
     ]),
-    runTime: PropTypes.string,
     src: PropTypes.string,
     title: PropTypes.string,
     videoLink: PropTypes.string,

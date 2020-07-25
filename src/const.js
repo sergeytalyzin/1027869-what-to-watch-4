@@ -23,4 +23,13 @@ export const AppRoute = {
   REVIEW: `/review`
 };
 
+export const TypeMovie = {
+  MOVIE: `movie`,
+  TRAILER: `trailer`
+};
+
+export const HowMuchRenderLikeThisFilms = {
+  START: 0,
+  END: 4
+};
 

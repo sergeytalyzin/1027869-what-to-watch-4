@@ -1,4 +1,5 @@
 import {extend} from "../../utils.js";
+import StoreLocal from "../../localStorage/localStorage";
 
 
 const AuthorizationStatus = {
@@ -6,8 +7,10 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+const authorizationLocalStorage = new StoreLocal(`AuthorizationStatus`);
+
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: authorizationLocalStorage.getAll() || AuthorizationStatus.NO_AUTH,
 };
 
 const ActionTypes = {
@@ -23,12 +26,16 @@ const ActionCreators = {
 
 const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
+    authorizationLocalStorage.clear();
     return api.get(`/login`)
       .then((res) => {
+
         if (res.status === 200) {
-          dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.AUTH));
+          authorizationLocalStorage.setItem(`AUTH`);
+          dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
         } else {
-          dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.NO_AUTH));
+          authorizationLocalStorage.setItem(`NO_AUTH`);
+          dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
         }
       })
       .catch((err) => {

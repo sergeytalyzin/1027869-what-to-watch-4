@@ -7,7 +7,7 @@ import MovieList from "../movie-list/movie-list.jsx";
 import Tabs from "../tabs/tabs.jsx";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import history from "../../history.js";
-import {AppRoute} from "../../const.js";
+import {AppRoute, HowMuchRenderLikeThisFilms} from "../../const.js";
 
 
 const TABS = {
@@ -29,10 +29,10 @@ const activeToTab = (tab, film, id) => {
 
 
 const MoviePage = (props) => {
-  const {authorizationStatus, films, film, activeTab, handleClickTab, onFilmWatch, onActiveFilm, postFavoriteFilms, loadFavoriteFilms, loadFilms} = props;
+  const {authorizationStatus, films, film, activeTab, handleTabClick, onFilmWatch, onActiveFilm, postFavoriteFilms, loadFavoriteFilms, loadFilms} = props;
   const {title, genre, date, src, bg, bgSrc, id, isFavorite} = film;
   let moreLikeThisFilms = [];
-  moreLikeThisFilms = films.filter((it)=> it.genre === genre && it.id !== id).slice(0, 4);
+  moreLikeThisFilms = films.filter((it)=> it.genre === genre && it.id !== id).slice(HowMuchRenderLikeThisFilms.START, HowMuchRenderLikeThisFilms.END);
 
   const changeFavorite = () => {
     if (isFavorite) {
@@ -136,7 +136,7 @@ const MoviePage = (props) => {
 
           <div className="movie-card__desc">
             <nav className="movie-nav movie-card__nav">
-              {<Tabs activeTab={activeTab} handleClickTab={handleClickTab}/>}
+              {<Tabs activeTab={activeTab} handleTabClick={handleTabClick}/>}
             </nav>
             {activeToTab(activeTab, film, id)}
           </div>
@@ -177,7 +177,7 @@ const MoviePage = (props) => {
 MoviePage.propTypes = {
   onActiveFilm: PropTypes.func,
   onFilmWatch: PropTypes.func,
-  handleClickTab: PropTypes.func.isRequired,
+  handleTabClick: PropTypes.func.isRequired,
   films: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string,

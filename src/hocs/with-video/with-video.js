@@ -1,5 +1,6 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
+import {TypeMovie} from "../../const.js";
 
 
 const withVideo = (Component) => {
@@ -19,20 +20,6 @@ const withVideo = (Component) => {
       this._handlerFullScreenButtonClick = this._handlerFullScreenButtonClick.bind(this);
     }
 
-    _handlerPlayButtonClick() {
-      this.setState((prevState)=>{
-        return {
-          isPlaying: !prevState.isPlaying,
-        };
-      });
-    }
-
-    _handlerFullScreenButtonClick() {
-      this.setState((prevState) => ({
-        isFullScreen: !prevState.isFullScreen
-      }));
-    }
-
     componentDidMount() {
       const {videoSrc, isMuted = false, type} = this.props;
       const video = this.videoRef.current;
@@ -45,7 +32,7 @@ const withVideo = (Component) => {
         });
       };
 
-      if (type === `movie`) {
+      if (type === TypeMovie.MOVIE) {
         video.onpause = () => {
           this.setState({
             isPlaying: false
@@ -67,7 +54,7 @@ const withVideo = (Component) => {
 
       const {isPlaying, type} = this.props;
 
-      if (type === `movie`) {
+      if (type === TypeMovie.MOVIE) {
         if (this.state.isPlaying) {
           video.play();
         } else {
@@ -75,7 +62,7 @@ const withVideo = (Component) => {
         }
       }
 
-      if (type === `trailer` && isPlaying !== this.state.isPlaying) {
+      if (type === TypeMovie.TRAILER && isPlaying !== this.state.isPlaying) {
         this.setState({isPlaying}, ()=> {
           if (isPlaying) {
             video.play();
@@ -94,6 +81,20 @@ const withVideo = (Component) => {
       video.muted = false;
       video.onpause = null;
       video.ontimeupdate = null;
+    }
+
+    _handlerPlayButtonClick() {
+      this.setState((prevState)=>{
+        return {
+          isPlaying: !prevState.isPlaying,
+        };
+      });
+    }
+
+    _handlerFullScreenButtonClick() {
+      this.setState((prevState) => ({
+        isFullScreen: !prevState.isFullScreen
+      }));
     }
 
     render() {

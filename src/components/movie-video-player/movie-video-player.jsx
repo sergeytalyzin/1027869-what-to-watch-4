@@ -1,7 +1,8 @@
 import React, {PureComponent, createRef, Fragment} from "react";
 import PropTypes from "prop-types";
 import history from "../../history.js";
-import {AppRoute} from "../../const.js";
+import {AppRoute, TypeMovie} from "../../const.js";
+
 
 const convertVideoTime = (time) => {
   let seconds;
@@ -35,6 +36,14 @@ class MovieVideoPlayer extends PureComponent {
     this._handlerFullScreenChange = this._handlerFullScreenChange.bind(this);
   }
 
+  componentDidMount() {
+    document.addEventListener(`fullscreenchange`, this._handlerFullScreenChange);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener(`fullscreenchange`, this._handlerFullScreenChange);
+  }
+
   _handlerFullScreenChange() {
     this.props.onFullScreenButtonClick();
   }
@@ -44,9 +53,9 @@ class MovieVideoPlayer extends PureComponent {
       onPlayButtonClick, isPlaying, title, isFullScreen, type} = this.props;
 
     switch (type) {
-      case `trailer`:
+      case TypeMovie.TRAILER:
         return (<Fragment>{children}</Fragment>);
-      case `movie`:
+      case TypeMovie.MOVIE:
         return (
           <div ref={this._rootElRef} className="player">
             {children}
@@ -106,13 +115,7 @@ class MovieVideoPlayer extends PureComponent {
     }
     return <p>Something went wrong :(</p>;
   }
-  componentDidMount() {
-    document.addEventListener(`fullscreenchange`, this._handlerFullScreenChange);
-  }
 
-  componentWillUnmount() {
-    document.removeEventListener(`fullscreenchange`, this._handlerFullScreenChange);
-  }
 
   render() {
     return this._renderPlayer();

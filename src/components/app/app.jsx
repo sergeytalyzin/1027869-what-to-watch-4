@@ -39,7 +39,6 @@ const App = ({
   postFavoriteFilms,
   loadFavoriteFilms,
 }) => {
-  console.log(`authorizationStatus`,authorizationStatus)
   return (<Router history={history}>
     <Switch>
       <Route exact path={AppRoute.ROOT}

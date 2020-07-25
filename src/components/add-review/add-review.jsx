@@ -1,6 +1,6 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
-import history from "../../history";
+import history from "../../history.js";
 import {AppRoute} from "../../const.js";
 
 
@@ -62,7 +62,9 @@ class AddReview extends PureComponent {
           </nav>
 
           <div className="user-block">
-            <div className="user-block__avatar">
+            <div onClick={()=>{
+              history.push(AppRoute.MY_LIST);
+            }} className="user-block__avatar">
               <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
             </div>
           </div>

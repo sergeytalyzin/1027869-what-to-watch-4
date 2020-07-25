@@ -79,6 +79,7 @@ exports[`Correctly render component Add Reviews 1`] = `
       >
         <div
           className="user-block__avatar"
+          onClick={[Function]}
         >
           <img
             alt="User avatar"
