@@ -125,9 +125,9 @@ AddReview.propTypes = {
   onSubmit: PropTypes.func,
   activeFilm: PropTypes.shape({
     title: PropTypes.string,
-    src: PropTypes.string.isRequired,
-    bgSrc: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired
+    src: PropTypes.string,
+    bgSrc: PropTypes.string,
+    id: PropTypes.number
   }),
 };
 

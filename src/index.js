@@ -9,9 +9,13 @@ import {createAPI} from "./api.js";
 import reducer from "./reducer/reducer.js";
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreators, AuthorizationStatus} from "./reducer/user/user.js";
+import {authorizationLocalStorage} from "./reducer/user/user.js";
+
 
 const onUnAuthorized = () => {
-  store.dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  authorizationLocalStorage.clear();
+  authorizationLocalStorage.setItem(AuthorizationStatus.NO_AUTH);
+  store.dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
 };
 
 

@@ -7,10 +7,10 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-const authorizationLocalStorage = new StoreLocal(`AuthorizationStatus`);
+export const authorizationLocalStorage = new StoreLocal(`AuthorizationStatus`);
 
 const initialState = {
-  authorizationStatus: authorizationLocalStorage.getAll() || AuthorizationStatus.NO_AUTH,
+  authorizationStatus: (typeof authorizationLocalStorage.getAll()) === `object` ? AuthorizationStatus.NO_AUTH : authorizationLocalStorage.getAll(),
 };
 
 const ActionTypes = {
@@ -26,14 +26,14 @@ const ActionCreators = {
 
 const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
-    authorizationLocalStorage.clear();
     return api.get(`/login`)
       .then((res) => {
-
         if (res.status === 200) {
+          authorizationLocalStorage.clear();
           authorizationLocalStorage.setItem(`AUTH`);
           dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
         } else {
+          authorizationLocalStorage.clear();
           authorizationLocalStorage.setItem(`NO_AUTH`);
           dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
         }
@@ -48,7 +48,9 @@ const Operation = {
       password: authData.password,
     })
       .then(() => {
-        dispatch(ActionCreators.requireAuthorization(AuthorizationStatus.AUTH));
+        authorizationLocalStorage.clear();
+        authorizationLocalStorage.setItem(`AUTH`);
+        dispatch(ActionCreators.requireAuthorization(authorizationLocalStorage.getAll()));
       });
   },
 };

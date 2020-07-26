@@ -14,7 +14,7 @@ export default class StoreLocal {
     localStorage.setItem(this.storeName, JSON.stringify(data));
   }
   clear() {
-    localStorage.clear();
+    localStorage.removeItem(this.storeName);
   }
 }
 
