@@ -10,7 +10,7 @@ const AuthorizationStatus = {
 export const authorizationLocalStorage = new StoreLocal(`AuthorizationStatus`);
 
 const initialState = {
-  authorizationStatus: (typeof authorizationLocalStorage.getAll()) === `object` ? AuthorizationStatus.NO_AUTH : authorizationLocalStorage.getAll(),
+  authorizationStatus: authorizationLocalStorage.getAll()|| AuthorizationStatus.NO_AUTH,
 };
 
 const ActionTypes = {

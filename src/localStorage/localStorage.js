@@ -4,7 +4,7 @@ export default class StoreLocal {
   }
   getAll() {
     try {
-      return JSON.parse(localStorage.getItem(this.storeName) || `[]`);
+      return JSON.parse(localStorage.getItem(this.storeName));
     } catch (err) {
       return {};
     }
