@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, Route, Router} from "react-router-dom";
+import {Switch, Route, Router, Redirect} from "react-router-dom";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import MoviePage from "../movie-page/movie-page.jsx";
@@ -109,6 +109,7 @@ const App = ({
         render={()=>
           <MyList/>
         }/>
+        <Redirect to={AppRoute.ROOT}/>
     </Switch>
   </Router>);
 };

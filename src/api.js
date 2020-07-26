@@ -22,7 +22,6 @@ export const createAPI = (onUnresolved) => {
 
     if (response.status === Error.UNRESOLVED) {
       onUnresolved();
-      history.push(AppRoute.SIGN_IN);
     }
     throw err;
   };
