@@ -1,6 +1,4 @@
 import axios from "axios";
-import history from "./history.js";
-import {AppRoute} from "./const.js";
 
 const Error = {
   UNRESOLVED: 401,

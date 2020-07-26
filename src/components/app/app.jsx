@@ -109,7 +109,7 @@ const App = ({
         render={()=>
           <MyList/>
         }/>
-        <Redirect to={AppRoute.ROOT}/>
+      <Redirect to={AppRoute.ROOT}/>
     </Switch>
   </Router>);
 };
