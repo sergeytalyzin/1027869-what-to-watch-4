@@ -1,5 +1,5 @@
-import {extend} from "../../utils.js";
-import adaptFilmsData, {adaptFilm, adaptReview} from "./adapt-films-data.js";
+import {extend} from "../../utils";
+import adaptFilmsData, {adaptFilm, adaptReview} from "./adapt-films-data";
 import StoreLocal from "../../localStorage/localStorage";
 
 

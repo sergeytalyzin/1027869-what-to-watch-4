@@ -1,4 +1,4 @@
-import {extend} from "../../utils.js";
+import {extend} from "../../utils";
 import StoreLocal from "../../localStorage/localStorage";
 
 
@@ -10,7 +10,7 @@ const AuthorizationStatus = {
 export const authorizationLocalStorage = new StoreLocal(`AuthorizationStatus`);
 
 const initialState = {
-  authorizationStatus: authorizationLocalStorage.getAll()|| AuthorizationStatus.NO_AUTH,
+  authorizationStatus: authorizationLocalStorage.getAll() || AuthorizationStatus.NO_AUTH,
 };
 
 const ActionTypes = {

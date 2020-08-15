@@ -1,4 +1,4 @@
-import {MONTHS} from "./const.js";
+import {MONTHS} from "./const";
 
 export const extend = (a, b) => {
   return Object.assign({}, a, b);

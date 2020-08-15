@@ -1,4 +1,4 @@
-import {extend} from "../../utils.js";
+import {extend} from "../../utils";
 
 
 const FILMS_SHOWED_ON_START_AMOUNT = 8;
